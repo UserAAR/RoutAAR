@@ -1,4 +1,4 @@
-import { GithubLogo, XLogo } from "@/components/icons/logos";
+import { GithubLogo } from "@/components/icons/logos";
 import { HomeIcon, LayoutDashboardIcon, SettingsIcon, MonitorIcon, MoonIcon, SunIcon, LinkIcon } from "lucide-react";
 
 export const Pages = [

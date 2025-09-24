@@ -83,7 +83,7 @@ const SubdomainsPage = async ({
                 <span>{env.PRIMARY_HOST}</span>
               </Link>
               <div className="flex items-center space-x-3">
-                <ShowClicks numberOfClicks={s.clicks} lastDate={s.lastVisited as any} className="hidden border-r border-neutral-200 pr-2 dark:border-neutral-800 md:flex" />
+                <ShowClicks numberOfClicks={s.clicks} lastDate={s.lastVisited ? new Date(s.lastVisited) : null} className="hidden border-r border-neutral-200 pr-2 dark:border-neutral-800 md:flex" />
                 <Dialog>
                   <DropdownMenu>
                     <DropdownMenuTrigger className="transition-opacity hover:opacity-75">
