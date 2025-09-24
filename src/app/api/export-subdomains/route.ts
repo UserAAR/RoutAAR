@@ -7,7 +7,6 @@ export async function GET() {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
   const result = await db.subdomains.findMany({
-    where: { creatorId: session.user?.id },
     select: {
       subdomain: true,
       mode: true,

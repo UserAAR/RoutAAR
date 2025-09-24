@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { db } from "@/server/db";
 
 /**
- * Get links with tags by user.
+ * Get links with tags (global, not per user).
  * Authentication required.
  */
 export const getLinksAndTagsByUser = cache(async () => {
@@ -15,21 +15,13 @@ export const getLinksAndTagsByUser = cache(async () => {
   }
 
   try {
-    
     const linkData = await db.links.findMany({
-      where: {
-        creatorId: currentUser.user?.id,
-      },
       include: {
         tags: true,
       },
     });
 
-    const tagsData = await db.tags.findMany({
-      where: {
-        creatorId: currentUser.user?.id,
-      },
-    });
+    const tagsData = await db.tags.findMany();
 
     return {
       limit: currentUser.user?.limitLinks,
@@ -44,27 +36,6 @@ export const getLinksAndTagsByUser = cache(async () => {
 });
 
 /**
- * Get only tags by user.
- * Authentication required.
- */
-export const getTagsByUser = cache(async () => {
-  const currentUser = await auth();
-
-  if (!currentUser) {
-    console.error("Not authenticated.");
-    return null;
-  }
-
-  const tagsData = await db.tags.findMany({
-    where: {
-      creatorId: currentUser.user?.id,
-    },
-  });
-
-  return tagsData;
-});
-
-/**
  * Get analytics for a subdomain: totals and recent visits (last 200).
  * Authentication required.
  */
@@ -76,7 +47,7 @@ export const getSubdomainAnalytics = cache(async (subdomainId: string) => {
   }
 
   const subdomain = await db.subdomains.findFirst({
-    where: { id: subdomainId, creatorId: currentUser.user?.id },
+    where: { id: subdomainId },
   });
   if (!subdomain) return null;
 

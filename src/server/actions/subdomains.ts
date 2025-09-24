@@ -31,7 +31,6 @@ export const getSubdomainsByUser = async () => {
     return [];
   }
   const result = await db.subdomains.findMany({
-    where: { creatorId: currentUser.user?.id },
     include: { tags: true },
     orderBy: { createdAt: "desc" },
   });
@@ -119,7 +118,7 @@ export const deleteSubdomain = async (id: string) => {
   }
 
   const result = await db.subdomains.delete({
-    where: { id, creatorId: currentUser.user?.id },
+    where: { id },
   });
 
   revalidatePath("/dashboard/subdomains");

@@ -72,22 +72,6 @@ export const createLink = async (
     return { error: "Not authenticated. Please login again." };
   }
 
-  // Get number of links created by the user:
-  const count = await db.links.count({
-    where: {
-      creatorId: currentUser.user?.id,
-    },
-  });
-
-  // Check if the user has reached the limit:
-  const limit = currentUser.user?.limitLinks;
-  if (count >= limit) {
-    return {
-      limit: true,
-      error: `You have reached the limit of ${limit} links.`,
-    };
-  }
-
   // If the user is blocked, dont allow to create a new link:
   if (currentUser.user?.blocked) {
     return {
@@ -96,7 +80,7 @@ export const createLink = async (
     };
   }
 
-  // Create new link:
+  // Create new link (no per-user limit enforcement):
   const result = await db.links.create({
     data: {
       ...values,
@@ -123,7 +107,7 @@ export const updateLink = async (values: z.infer<typeof EditLinkSchema>) => {
     return null;
   }
 
-  // Update link:
+  // Update link (no creator constraint):
   await db.links.update({
     where: { id: values.id },
     data: {
@@ -151,9 +135,9 @@ export const deleteLink = async (id: string) => {
     return null;
   }
 
-  // Update link:
+  // Delete by id only (admin-only UI ensures access):
   const result = await db.links.delete({
-    where: { id: id, creatorId: currentUser.user?.id },
+    where: { id: id },
   });
 
   revalidatePath("/dashboard");
@@ -174,11 +158,7 @@ export const downloadAllLinks = async () => {
     return null;
   }
 
-  const result = await db.links.findMany({
-    where: {
-      creatorId: currentUser.user?.id,
-    },
-  });
+  const result = await db.links.findMany();
 
   return result.map((link) => {
     const { slug, url, createdAt } = link;

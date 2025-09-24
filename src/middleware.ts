@@ -103,6 +103,15 @@ export default auth(async (req) => {
     return NextResponse.redirect(new URL(`/auth?callbackUrl=${encodedCallbackUrl}`, nextUrl));
   }
 
+  // Admin allowlist for dashboard and protected areas
+  if (isProtectedRoute) {
+    const allow = (env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+    const email = req.auth?.user?.email?.toLowerCase();
+    if (allow.length > 0 && (!email || !allow.includes(email))) {
+      return NextResponse.redirect(new URL(`/unauthorized`, nextUrl));
+    }
+  }
+
   // Path-based slugs on control host, public root host, or local dev
   const isLocal = host?.includes("localhost") || host?.startsWith("127.0.0.1");
   if ((host === publicRootHost || host === controlHost || isLocal) && !isPublicRoute && !isProtectedRoute && !isCheckRoute) {
