@@ -30,17 +30,22 @@ export default auth(async (req) => {
 
   const slugRoute = req.nextUrl.pathname.split("/").pop();
 
-  // Subdomain detection:
   const host = nextUrl.host; // includes domain and subdomain
-  const primaryHost = env.PRIMARY_HOST; // e.g., rout.aars.works
+  const controlHost = env.CONTROL_HOST; // rout.aars.works
+  const publicRootHost = env.PUBLIC_ROOT_HOST; // aars.works
   let handledBySubdomain = false;
 
-  if (host && primaryHost && host !== primaryHost && host.endsWith("." + primaryHost.split(".").slice(1).join("."))) {
-    // Extract subdomain part before the primary host's root domain
+  // Subdomain handling only for publicRootHost
+  if (
+    host &&
+    publicRootHost &&
+    host !== controlHost &&
+    (host === publicRootHost || host.endsWith(`.${publicRootHost}`))
+  ) {
     const hostParts = host.split(".");
-    const primaryParts = primaryHost.split(".");
-    if (hostParts.length > primaryParts.length) {
-      const subdomain = hostParts.slice(0, hostParts.length - primaryParts.length).join(".");
+    const rootParts = publicRootHost.split(".");
+    if (hostParts.length > rootParts.length) {
+      const subdomain = hostParts.slice(0, hostParts.length - rootParts.length).join(".");
       if (subdomain) {
         const path = nextUrl.pathname;
         const query = nextUrl.search ?? "";
@@ -68,48 +73,38 @@ export default auth(async (req) => {
     }
   }
 
-  // If subdomain handled, stop here
   if (handledBySubdomain) {
     return;
   }
 
-  // ⚙️ Is Api Route:
+  // Api routes: allow
   if (isApiAuthRoute) {
     return;
   }
 
-  // ⚙️ Is Auth Route. First, check is authenticated:
+  // Auth routes
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return NextResponse.redirect(
-        new URL(DEFAULT_LOGIN_REDIRECT_URL, nextUrl),
-      );
+      return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT_URL, nextUrl));
     }
     return;
   }
 
-  // ⚙️ If Slug contains ``c``, redirect to /check/:slug:
+  // check slug shortcut
   if (slugRoute?.endsWith("&c")) {
-    return NextResponse.redirect(
-      new URL(`/check/${slugRoute.replace("&c", "")}`, nextUrl),
-    );
+    return NextResponse.redirect(new URL(`/check/${slugRoute.replace("&c", "")}`, nextUrl));
   }
 
-  // ⚙️ Protected routes. If not authenticated, redirect to /auth:
+  // Protected
   if (!isLoggedIn && isProtectedRoute) {
     let callbackUrl = nextUrl.pathname;
-    if (nextUrl.search) {
-      callbackUrl += nextUrl.search;
-    }
+    if (nextUrl.search) callbackUrl += nextUrl.search;
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
-    return NextResponse.redirect(
-      new URL(`/auth?callbackUrl=${encodedCallbackUrl}`, nextUrl),
-    );
+    return NextResponse.redirect(new URL(`/auth?callbackUrl=${encodedCallbackUrl}`, nextUrl));
   }
 
-  // ⚙️ Redirect using slug:
-  // If not public route and not protected route:
-  if (!isPublicRoute && !isProtectedRoute && !isCheckRoute) {
+  // Path-based slugs on public root host (aars.works)
+  if (host === publicRootHost && !isPublicRoute && !isProtectedRoute && !isCheckRoute) {
     const apiUrl = new URL(`/api/resolve-slug?slug=${encodeURIComponent(slugRoute ?? "")}`, nextUrl);
     const res = await fetch(apiUrl.toString(), { headers: { "x-mw": "1" } });
     const data: { redirect404?: boolean; error?: boolean; message?: string; url?: string } = await res.json();

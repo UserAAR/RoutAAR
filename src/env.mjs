@@ -20,7 +20,9 @@ export const env = createEnv({
     GITHUB_CLIENT_SECRET: z.string(),
     GOOGLE_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
-    PRIMARY_HOST: z.string(), // e.g., rout.aars.works
+    PRIMARY_HOST: z.string().optional(), // kept for backwards-compat
+    CONTROL_HOST: z.string(), // e.g., rout.aars.works (app)
+    PUBLIC_ROOT_HOST: z.string(), // e.g., aars.works (links & subdomains)
   },
   runtimeEnv: {
     TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
@@ -34,6 +36,8 @@ export const env = createEnv({
     GOOGLE_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     PRIMARY_HOST: process.env.PRIMARY_HOST,
+    CONTROL_HOST: process.env.CONTROL_HOST,
+    PUBLIC_ROOT_HOST: process.env.PUBLIC_ROOT_HOST,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
   emptyStringAsUndefined: true,
