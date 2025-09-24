@@ -78,7 +78,7 @@ const SubdomainsPage = async ({
         {filtered.map((s) => (
           <div key={s.id} className="flex w-full flex-col rounded-md border border-neutral-200 p-3 shadow-sm dark:border-neutral-800">
             <div className="mb-1 flex w-full items-center justify-between space-x-2">
-              <Link href={`https://${s.subdomain}.${env.PUBLIC_ROOT_HOST}`} className="block space-x-[1px] overflow-hidden truncate font-medium transition-opacity duration-75 hover:opacity-80">
+              <Link href={`https://${s.subdomain}.${env.PUBLIC_ROOT_HOST}`} target="_blank" rel="noopener noreferrer" className="block space-x-[1px] overflow-hidden truncate font-medium transition-opacity duration-75 hover:opacity-80">
                 <span className="text-sm opacity-40">{s.subdomain}.</span>
                 <span>{env.PUBLIC_ROOT_HOST}</span>
               </Link>
