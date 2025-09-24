@@ -1,8 +1,8 @@
 {
-  "name": "@pheralb/slug",
+  "name": "routaar",
   "version": "3.2.0",
-  "author": "@pheralb_",
-  "description": "A URL shortener built with T3 Stack",
+  "author": "Amil Abdullazada (@UserAAR)",
+  "description": "Routaar — Central control tower for branded subdomains and smart redirects",
   "private": true,
   "license": "GPL-3.0-only",
   "type": "module",
@@ -82,5 +82,14 @@
   },
   "ct3aMetadata": {
     "initVersion": "7.25.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UserAAR/RoutAAR.git"
+  },
+  "homepage": "https://rout.aars.works",
+  "bugs": {
+    "url": "https://github.com/UserAAR/RoutAAR/issues",
+    "email": "amil.abdullazada@gmail.com"
   }
 }

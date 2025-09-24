@@ -41,8 +41,8 @@ This document captures the high-level plan, tasks, and design decisions to evolv
   - [x] Edit dialog + Delete confirm
   - [x] Analytics page (total + recent visits)
   - [x] PRIMARY_HOST-based display for hostnames
+- [x] README update and repository metadata
+- [x] Production domain & wildcard setup docs under `/docs`
 - [ ] Hardening
   - [ ] Error states in UI cards/dialogs (enhanced)
-  - [ ] Optional rate limiting
-  - [ ] README update
-  - [ ] Production domain & wildcard setup docs 
+  - [ ] Optional rate limiting 
