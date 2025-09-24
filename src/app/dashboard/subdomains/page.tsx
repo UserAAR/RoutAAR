@@ -18,6 +18,7 @@ import CopyQR from "@/components/links/copy-qr";
 import { buttonVariants } from "@/ui/button";
 import { formatDate } from "@/utils/formatDate";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/ui/collapsible";
+import { ChevronDownIcon } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Subdomains",
@@ -148,7 +149,8 @@ const SubdomainsPage = async ({
                     </p>
                   )}
                   <CollapsibleTrigger className="flex items-center transition-colors hover:text-neutral-900 dark:hover:text-white md:hidden">
-                    <span className="mr-2">Info</span>
+                    <ChevronDownIcon size={14} className="mr-2" />
+                    <span>Info</span>
                   </CollapsibleTrigger>
                 </div>
                 <p>{formatDate(new Date((s.lastVisited ?? s.createdAt) as string | number | Date))}</p>
