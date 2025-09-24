@@ -2,15 +2,11 @@
   "redirects": [
     {
       "source": "/git",
-      "destination": "https://github.com/pheralb/slug"
+      "destination": "https://github.com/UserAAR/RoutAAR"
     },
     {
       "source": "/dash",
       "destination": "/dashboard"
-    },
-    {
-      "source": "/docs",
-      "destination": "/docs/getting-started"
     }
   ]
 }
