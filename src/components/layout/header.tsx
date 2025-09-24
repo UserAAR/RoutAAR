@@ -10,6 +10,7 @@ import UserButton from "@/components/auth/user-btn";
 import Logo from "@/components/icons/logo";
 import { GithubLogo } from "@/components/icons/logos";
 import CommandK from "@/components/commandK";
+import { env } from "@/env.mjs";
 
 const Header = () => {
   return (
@@ -26,8 +27,8 @@ const Header = () => {
       >
         <div className="flex items-center space-x-5">
           <div className="flex items-center space-x-1 pr-1 md:pr-4">
-            <Link
-              href="/"
+            <ExternalLink
+              href={`https://${env.CONTROL_HOST}`}
               className="flex items-center space-x-3 transition-opacity hover:opacity-80 rtl:space-x-reverse"
             >
               <Logo width={30} />
@@ -35,7 +36,7 @@ const Header = () => {
                 Routaar
               </span>
               <Badge className="hidden cursor-pointer md:block">beta</Badge>
-            </Link>
+            </ExternalLink>
           </div>
         </div>
         <div className="flex items-center space-x-1">

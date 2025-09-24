@@ -22,15 +22,15 @@ const NotFoundPage = async () => {
             {`The page you're looking for doesn't exist on ${domain}.`}
           </p>
           <div className="flex items-center justify-center space-x-2">
-            <Link className={buttonVariants({ variant: "outline" })} href="/">
+            <ExternalLink className={buttonVariants({ variant: "outline" })} href="https://rout.aars.works">
               <HomeIcon size={18} />
               <span>Go back home</span>
-            </Link>
+            </ExternalLink>
             <ExternalLink
               className={buttonVariants({ variant: "outline" })}
-              href="https://github.com/pheralb/slug/issues/new/choose"
+              href="https://api.whatsapp.com/send/?phone=994507746585&text=Hello!%20I%20need%20assistance%20with%20Routaar."
             >
-              <span>Create issue</span>
+              <span>Contact me</span>
               <ArrowUpRight size={18} />
             </ExternalLink>
           </div>
