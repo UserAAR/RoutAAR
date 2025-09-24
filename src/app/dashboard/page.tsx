@@ -54,7 +54,7 @@ const DashboardPage = async ({
       <header className="mb-3 flex w-full items-center space-x-2 md:justify-between">
         <SearchLinks className="w-full md:w-72 md:max-w-72" />
         <div className="flex items-center space-x-2">
-          <LinksLimit userLinks={data.links.length} maxLinks={data.limit} />
+          <LinksLimit userLinks={data.links.length} maxLinks={Infinity as unknown as number} />
           <SearchTag
             tags={data.tags}
             tagSelected={searchTag!}

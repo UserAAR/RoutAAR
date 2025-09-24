@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/ui/button";
@@ -10,6 +10,7 @@ import { deleteSubdomain } from "@/server/actions/subdomains";
 interface Props {
   id: string;
   subdomain: string;
+  children?: ReactNode; // custom trigger
 }
 
 export function DeleteSubdomain(props: Props) {
@@ -34,7 +35,9 @@ export function DeleteSubdomain(props: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">Delete</Button>
+        {props.children ? props.children : (
+          <Button variant="outline" size="sm">Delete</Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="mb-2">

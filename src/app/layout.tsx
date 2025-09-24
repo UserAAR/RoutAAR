@@ -35,10 +35,10 @@ const geistMonoVariable = localFont({
 
 // Metadata:
 export const metadata: Metadata = {
-  metadataBase: new URL("https://slug.vercel.app"),
+  metadataBase: new URL("https://rout.aars.works"),
   title: {
-    default: "Slug - A beautifully open-source URL shortener",
-    template: "%s - Slug",
+    default: "Routaar",
+    template: "%s - Routaar",
   },
   manifest: "/manifest.json",
   icons: [
@@ -61,12 +61,14 @@ export const metadata: Metadata = {
       url: "/images/apple-touch-icon.png",
     },
   ],
-  description: "An open-source URL shortener built with T3 Stack.",
+  description:
+    "Routaar is a central control tower for branded subdomains and smart redirects. Create rules, render external content under your domain, and organize your digital presence.",
   openGraph: {
-    title: "Slug",
-    description: "An beautifully open-source URL shortener",
-    url: "https://slug.vercel.app/images/og_image.png",
-    siteName: "Slug - An beautifully open-source URL shortener",
+    title: "Routaar",
+    description:
+      "Routaar is a central control tower for branded subdomains and smart redirects.",
+    url: "https://rout.aars.works/images/og_image_v3.jpg",
+    siteName: "Routaar",
     locale: "en_US",
     type: "website",
   },
@@ -82,7 +84,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Slug - An beautifully open-source URL shortener",
+    title: "Routaar",
     card: "summary_large_image",
   },
 };

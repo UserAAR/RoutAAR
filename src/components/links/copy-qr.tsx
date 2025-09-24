@@ -21,17 +21,22 @@ import {
 } from "@/ui/dropdown-menu";
 
 interface CopyQRProps {
-  linkInfo: Links;
+  linkInfo?: Links;
+  absoluteUrl?: string;
+  filename?: string;
 }
 
-const CopyQR = ({ linkInfo }: CopyQRProps) => {
+const CopyQR = ({ linkInfo, absoluteUrl, filename }: CopyQRProps) => {
+  const urlValue = absoluteUrl ?? (linkInfo ? `/${linkInfo.slug}` : "");
+  const fileBase = filename ?? (linkInfo ? linkInfo.slug : "qrcode");
+
   const handleDownloadQRImage = (type: "png" | "svg") => {
     const svg = document.getElementById("qr-code");
     const svgData = new XMLSerializer().serializeToString(svg!);
     if (type === "svg") {
       const svgBlob = new Blob([svgData], { type: "image/svg+xml" });
       const downloadLink = document.createElement("a");
-      downloadLink.download = `${linkInfo.slug}_slug_app.svg`;
+      downloadLink.download = `${fileBase}.svg`;
       downloadLink.href = window.URL.createObjectURL(svgBlob);
       downloadLink.click();
     } else if (type === "png") {
@@ -44,7 +49,7 @@ const CopyQR = ({ linkInfo }: CopyQRProps) => {
         ctx!.drawImage(img, 0, 0);
         const pngFile = canvas.toDataURL("image/png");
         const downloadLink = document.createElement("a");
-        downloadLink.download = `${linkInfo.slug}_slug_app.png`;
+        downloadLink.download = `${fileBase}.png`;
         downloadLink.href = pngFile;
         downloadLink.click();
       };
@@ -56,19 +61,13 @@ const CopyQR = ({ linkInfo }: CopyQRProps) => {
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Copy QR Code</DialogTitle>
-        <DialogDescription>{linkInfo.description}</DialogDescription>
+        <DialogDescription>{linkInfo?.description}</DialogDescription>
       </DialogHeader>
       <div className="my-3 flex flex-col items-center justify-center space-y-3 overflow-hidden">
         <div className="rounded-lg border border-neutral-100 p-2 shadow-md dark:border-neutral-800">
-          <QRCode
-            id="qr-code"
-            size={128}
-            style={{ height: "auto" }}
-            value={`https://slug.vercel.app/${linkInfo.slug}`}
-            viewBox={`0 0 128 128`}
-          />
+          <QRCode id="qr-code" size={128} style={{ height: "auto" }} value={urlValue} viewBox={`0 0 128 128`} />
         </div>
-        <p className="block w-full truncate font-mono text-center font-medium">{`/${linkInfo.slug}`}</p>
+        <p className="block w-full truncate font-mono text-center font-medium">{urlValue}</p>
       </div>
       <DialogFooter>
         <DropdownMenu>

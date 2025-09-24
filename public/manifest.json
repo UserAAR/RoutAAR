@@ -4,9 +4,9 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "slug",
-  "description": "A beautifully open-source URL shortener",
-  "short_name": "slug",
+  "name": "Routaar",
+  "description": "Central control tower for branded subdomains and smart redirects.",
+  "short_name": "Routaar",
   "icons": [
     {
       "src": "/images/icon-192x192.png",

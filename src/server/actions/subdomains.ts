@@ -32,6 +32,7 @@ export const getSubdomainsByUser = async () => {
   }
   const result = await db.subdomains.findMany({
     where: { creatorId: currentUser.user?.id },
+    include: { tags: true },
     orderBy: { createdAt: "desc" },
   });
   return result;

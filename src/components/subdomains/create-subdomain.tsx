@@ -6,6 +6,7 @@ import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import JSConfetti from "js-confetti";
 
 import { CreateSubdomainSchema } from "@/server/schemas";
 import { checkIfSubdomainExists, createSubdomain } from "@/server/actions/subdomains";
@@ -31,6 +32,7 @@ interface Props {
 
 export function CreateSubdomain(props: Props) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof CreateSubdomainSchema>>({
     resolver: zodResolver(CreateSubdomainSchema),
@@ -49,6 +51,15 @@ export function CreateSubdomain(props: Props) {
     e.preventDefault();
     const random = Math.random().toString(36).substring(7);
     form.setValue("subdomain", random);
+  };
+
+  const generateConfetti = async () => {
+    const jsConfetti = new JSConfetti();
+    await jsConfetti.addConfetti({
+      confettiColors: ["#fdd835", "#4caf50", "#2196f3", "#f44336", "#ff9800"],
+      confettiRadius: 3,
+      confettiNumber: 50,
+    });
   };
 
   const onSubmit = async (values: z.infer<typeof CreateSubdomainSchema>) => {
@@ -74,6 +85,8 @@ export function CreateSubdomain(props: Props) {
       });
 
       form.reset();
+      setOpen(false);
+      await generateConfetti();
     } catch (e) {
       toast.error("An unexpected error has occurred. Please try again later.");
     } finally {
@@ -82,7 +95,7 @@ export function CreateSubdomain(props: Props) {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{props.children}</DialogTrigger>
       <DialogContent>
         <DialogHeader className="mb-2">

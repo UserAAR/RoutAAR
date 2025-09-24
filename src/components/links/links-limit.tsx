@@ -14,8 +14,9 @@ interface LinksLimitProps {
 }
 
 const LinksLimit = ({ userLinks, maxLinks }: LinksLimitProps) => {
-  const max = userLinks >= maxLinks;
-  const mid = userLinks >= maxLinks / 2;
+  const isInfinite = !Number.isFinite(maxLinks);
+  const max = !isInfinite && userLinks >= maxLinks;
+  const mid = !isInfinite && userLinks >= maxLinks / 2;
   return (
     <TooltipProvider delayDuration={500}>
       <Tooltip>
@@ -39,19 +40,19 @@ const LinksLimit = ({ userLinks, maxLinks }: LinksLimitProps) => {
                 <PackageIcon size={14} />
               )}
               <span>
-                {userLinks < 10 ? `0${userLinks}` : userLinks}
-                {"/"}
-                {maxLinks < 10 ? `0${maxLinks}` : maxLinks}
+                {userLinks}/{isInfinite ? "∞" : maxLinks}
               </span>
             </div>
           </div>
         </TooltipTrigger>
         <TooltipContent>
-          {max ? (
-            <p>You have reached the maximum limit of {maxLinks} links.</p>
+          {isInfinite ? (
+            <p>You have created {userLinks} items. Unlimited plan.</p>
+          ) : max ? (
+            <p>You have reached the maximum limit of {maxLinks} items.</p>
           ) : (
             <p>
-              You have created {userLinks} out of {maxLinks} links.
+              You have created {userLinks} out of {maxLinks} items.
             </p>
           )}
         </TooltipContent>
