@@ -15,7 +15,6 @@ interface LinksLimitProps {
 const LinksLimit = ({ userLinks, maxLinks }: LinksLimitProps) => {
   const isInfinite = !Number.isFinite(maxLinks);
   const max = !isInfinite && userLinks >= maxLinks;
-  const mid = !isInfinite && userLinks >= maxLinks / 2;
   return (
     <TooltipProvider delayDuration={500}>
       <Tooltip>
@@ -26,7 +25,7 @@ const LinksLimit = ({ userLinks, maxLinks }: LinksLimitProps) => {
               className: "cursor-default font-mono shadow-none",
             })}
           >
-            <div className={cn("flex items-center space-x-2")}> 
+            <div className="flex items-center space-x-2">
               <span>
                 {userLinks}/{isInfinite ? "∞" : maxLinks}
               </span>

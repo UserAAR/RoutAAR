@@ -33,6 +33,7 @@ type SubdomainItem = {
   description: string | null;
   clicks: number;
   lastVisited: Date | string | null;
+  createdAt: Date | string;
   tags: { tagId: string }[];
 };
 
@@ -145,7 +146,7 @@ const SubdomainsPage = async ({
                   </p>
                 )}
               </div>
-              <p>{s.lastVisited ? formatDate(new Date(s.lastVisited)) : formatDate(new Date(String((s as any).createdAt)))}</p>
+              <p>{formatDate(new Date((s.lastVisited ?? s.createdAt) as string | number | Date))}</p>
             </div>
           </div>
         ))}

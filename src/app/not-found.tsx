@@ -3,7 +3,6 @@ import { buttonVariants } from "@/ui/button";
 import ExternalLink from "@/ui/external-link";
 import { ArrowUpRight, HomeIcon } from "lucide-react";
 import { headers } from "next/headers";
-import Link from "next/link";
 
 const NotFoundPage = async () => {
   const headersList = headers();
