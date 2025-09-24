@@ -33,18 +33,22 @@ export const {
     },
   },
   callbacks: {
-    async signIn({ user, account }) {
-      // Allow OAuth without email verification
-      if (account?.provider !== "credentials") return true;
+    async signIn({ user, account, profile }) {
+      // Always allow OAuth sign-in; enforce blocked emails only
+      if (account?.provider !== "credentials") {
+        if (user?.email) {
+          const emailBlocked = await checkBlockedEmail(user.email);
+          if (emailBlocked) return false;
+        }
+        return true;
+      }
 
       const existingUser = await getUserById(user.id);
 
-      // Disable sign in for blocked users
       const emailBlocked = await checkBlockedEmail(user.email!);
-
       if (emailBlocked) return false;
 
-      // Prevent sign in without email verification
+      // Prevent sign in without email verification for credentials
       if (!existingUser?.emailVerified) return false;
 
       if (existingUser.isTwoFactorEnabled) {

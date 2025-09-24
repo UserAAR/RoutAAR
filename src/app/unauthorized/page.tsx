@@ -1,7 +1,7 @@
 import Footer from "@/components/layout/footer";
 import { buttonVariants } from "@/ui/button";
-import { AlertTriangle, LogIn } from "lucide-react";
-import Link from "next/link";
+import { AlertTriangle } from "lucide-react";
+import SignOutAndGo from "@/components/auth/signout-redirect";
 
 const UnauthorizedPage = async () => {
   return (
@@ -16,10 +16,7 @@ const UnauthorizedPage = async () => {
           This dashboard is restricted to authorized accounts only. If you believe you should have access, please contact the maintainer.
         </p>
         <div className="mt-6 flex items-center space-x-2">
-          <Link href="/auth" className={buttonVariants({ variant: "default" })}>
-            <LogIn size={18} />
-            <span>Sign in</span>
-          </Link>
+          <SignOutAndGo to="/auth" />
           <a
             href="https://api.whatsapp.com/send/?phone=994507746585&text=Hello!%20Please%20grant%20access%20to%20Routaar%20dashboard."
             className={buttonVariants({ variant: "outline" })}
