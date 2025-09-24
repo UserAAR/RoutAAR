@@ -13,10 +13,10 @@ export default async function Home() {
         className="flex flex-col items-center px-6 pt-16 text-center md:pt-24 lg:pt-32"
       >
         <TypographyH1 className="max-w-[75ch] duration-500 animate-in fade-in-5 slide-in-from-bottom-2">
-          Unified control for domains, links, and content
+          Unified control for domains and links
         </TypographyH1>
         <TypographyP className="max-w-[75ch] text-sm duration-700 animate-in fade-in-5 slide-in-from-top-2 md:text-base [&:not(:first-child)]:mt-6">
-          Routaar is your central control tower for branded subdomains and smart redirects. Create rules, render external content under your domain, and organize your digital presence seamlessly.
+          Routaar is your central control tower for branded subdomains and smart redirects. Create rules, render external content under your domain and organize your digital presence seamlessly.
         </TypographyP>
         <div className="mt-8 flex items-center justify-center duration-700 animate-in fade-in-30 md:space-x-3 space-x-2">
           <Link
