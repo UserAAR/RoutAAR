@@ -23,9 +23,16 @@ export interface ResolveSubdomainResult {
   renderUrl?: string;
 }
 
+const ensureProtocol = (rawUrl: string): string => {
+  if (!rawUrl) return rawUrl;
+  const hasProtocol = /^https?:\/\//i.test(rawUrl);
+  return hasProtocol ? rawUrl : `https://${rawUrl}`;
+};
+
 const joinUrl = (baseUrl: string, path: string, query: string, passthrough: boolean) => {
   try {
-    const url = new URL(baseUrl);
+    const normalizedBase = ensureProtocol(baseUrl);
+    const url = new URL(normalizedBase);
     if (passthrough) {
       const basePath = url.pathname.endsWith("/") ? url.pathname.slice(0, -1) : url.pathname;
       const addPath = path ?? "";
@@ -38,7 +45,7 @@ const joinUrl = (baseUrl: string, path: string, query: string, passthrough: bool
     }
     return url.toString();
   } catch (e) {
-    return baseUrl; // fallback
+    return ensureProtocol(baseUrl); // fallback
   }
 };
 
@@ -85,14 +92,20 @@ export const resolveSubdomain = async (
       entry.passthrough,
     );
 
-    if (entry.mode === "redirect") {
+    const mode = (entry.mode ?? "").toString().trim().toLowerCase();
+
+    if (mode === "redirect") {
       return {
         redirectUrl: destination,
         statusCode: entry.statusCode ?? 302,
       };
     }
 
-    // render mode
+    if (mode === "render" || mode === "proxy") {
+      return { renderUrl: destination };
+    }
+
+    // Unknown mode: default to render for safety
     return { renderUrl: destination };
   } catch (error) {
     console.error("Error resolving subdomain:", error);
