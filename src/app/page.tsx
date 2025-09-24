@@ -1,9 +1,7 @@
 import Footer from "@/components/layout/footer";
-import { GithubLogo } from "@/components/icons/logos";
 import { buttonVariants } from "@/ui/button";
-import ExternalLink from "@/ui/external-link";
 import { TypographyH1, TypographyP } from "@/ui/typography";
-import { LinkIcon } from "lucide-react";
+import { LinkIcon, GlobeIcon } from "lucide-react";
 import Link from "next/link";
 
 export default async function Home() {
@@ -15,11 +13,10 @@ export default async function Home() {
         className="flex flex-col items-center px-6 pt-16 text-center md:pt-24 lg:pt-32"
       >
         <TypographyH1 className="max-w-[75ch] duration-500 animate-in fade-in-5 slide-in-from-bottom-2">
-          Enhance Your Link Management
+          Unified control for domains, links, and content
         </TypographyH1>
         <TypographyP className="max-w-[75ch] text-sm duration-700 animate-in fade-in-5 slide-in-from-top-2 md:text-base [&:not(:first-child)]:mt-6">
-          Slug is an open-source platform that allows you to create, manage, and
-          share short links with ease. It's fast, secure, and easy to use.
+          Routaar is your central control tower for branded subdomains and smart redirects. Create rules, render external content under your domain, and organize your digital presence seamlessly.
         </TypographyP>
         <div className="mt-8 flex items-center justify-center duration-700 animate-in fade-in-30 md:space-x-3 space-x-2">
           <Link
@@ -30,27 +27,20 @@ export default async function Home() {
               size: "lg",
             })}
           >
-            <LinkIcon
-              size={18}
-              className="duration-300 group-hover:rotate-[14deg]"
-            />
+            <LinkIcon size={18} className="duration-300 group-hover:rotate-[14deg]" />
             <span>Create a Link</span>
           </Link>
-          <ExternalLink
-            href="https://github.com/pheralb/slug"
+          <Link
+            href="/dashboard/subdomains"
             className={buttonVariants({
               variant: "expandIcon",
               size: "lg",
               className: "group",
             })}
           >
-            <GithubLogo
-              height={18}
-              className="duration-300
-                 group-hover:-rotate-[10deg]"
-            />
-            <span>Star on GitHub</span>
-          </ExternalLink>
+            <GlobeIcon height={18} className="duration-300 group-hover:-rotate-[10deg]" />
+            <span>Create a Subdomain</span>
+          </Link>
         </div>
       </section>
       <Footer className="fixed bottom-0 mt-4 py-4" />

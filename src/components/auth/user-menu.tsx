@@ -1,15 +1,8 @@
 "use client";
 
 import { DropdownMenuItem } from "@/ui/dropdown-menu";
-import {
-  ArrowUpRight,
-  BugIcon,
-  HomeIcon,
-  LayoutDashboardIcon,
-  SettingsIcon,
-} from "lucide-react";
+import { ArrowUpRight, HomeIcon, LayoutDashboardIcon, SettingsIcon, BriefcaseIcon, LinkIcon } from "lucide-react";
 import Link from "next/link";
-import { XLogo } from "@/components/icons/logos";
 
 const UserMenu = () => {
   const iconSize = 15;
@@ -34,29 +27,20 @@ const UserMenu = () => {
           <span>Settings</span>
         </Link>
       </DropdownMenuItem>
-      <DropdownMenuItem
-        asChild
-        className="flex w-full items-center justify-between"
-      >
-        <Link
-          href="https://github.com/pheralb/slug/issues/new/choose"
-          target="_blank"
-        >
+      <DropdownMenuItem asChild className="flex w-full items-center justify-between">
+        <Link href="https://dev.aars.works" target="_blank">
           <div className="flex items-center space-x-3">
-            <BugIcon size={iconSize} />
-            <span>Report a bug</span>
+            <BriefcaseIcon size={iconSize} />
+            <span>Portfolio Website</span>
           </div>
           <ArrowUpRight size={iconSize} className="opacity-40" />
         </Link>
       </DropdownMenuItem>
-      <DropdownMenuItem
-        asChild
-        className="flex w-full items-center justify-between"
-      >
-        <Link href="https://twitter.com/pheralb_" target="_blank">
+      <DropdownMenuItem asChild className="flex w-full items-center justify-between">
+        <Link href="https://links.aars.works" target="_blank">
           <div className="flex items-center space-x-3">
-            <XLogo width={iconSize} />
-            <span>Contact</span>
+            <LinkIcon size={iconSize} />
+            <span>Social Links</span>
           </div>
           <ArrowUpRight size={iconSize} className="opacity-40" />
         </Link>

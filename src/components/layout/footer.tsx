@@ -1,8 +1,7 @@
 import ExternalLink from "@/ui/external-link";
 import { cn } from "@/utils";
 import React from "react";
-import { T3Logo, XLogo } from "../icons/logos";
-import { ArrowUpRight, Heart } from "lucide-react";
+import { ArrowUpRight, Heart, LinkIcon } from "lucide-react";
 
 interface FooterProps {
   className?: string;
@@ -23,22 +22,15 @@ const Footer = (props: FooterProps) => {
             size={14}
             className="text-red-500 group-hover:transform group-hover:animate-pulse"
           />
-          <ExternalLink
-            href="https://create.t3.gg/"
-            className="flex items-center space-x-1"
-          >
-            <p>Made by Pablo using</p>
-            <T3Logo className="h-4 w-4" />
+          <ExternalLink href="https://dev.aars.works" className="flex items-center space-x-1">
+            <p>Made by AAR</p>
             <ArrowUpRight size={14} />
           </ExternalLink>
         </div>
         <div className="flex items-center space-x-2">
-          <XLogo className="h-3 w-3" />
-          <ExternalLink
-            href="https://twitter.com/pheralb_"
-            className="flex items-center space-x-1"
-          >
-            <p className="hidden md:block">Twitter</p>
+          <LinkIcon className="h-3 w-3" />
+          <ExternalLink href="https://links.aars.works" className="flex items-center space-x-1">
+            <p className="hidden md:block">Social Links</p>
             <ArrowUpRight size={14} />
           </ExternalLink>
         </div>

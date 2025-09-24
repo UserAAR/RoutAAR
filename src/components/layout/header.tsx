@@ -32,7 +32,7 @@ const Header = () => {
             >
               <Logo width={30} />
               <span className="self-center whitespace-nowrap text-lg font-medium tracking-tight dark:text-white">
-                slug
+                Routaar
               </span>
               <Badge className="hidden cursor-pointer md:block">beta</Badge>
             </Link>
@@ -40,7 +40,7 @@ const Header = () => {
         </div>
         <div className="flex items-center space-x-1">
           <ExternalLink
-            href="https://github.com/pheralb/slug"
+            href="https://github.com/UserAAR"
             className={buttonVariants({
               variant: "ghost",
               size: "icon",

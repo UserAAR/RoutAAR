@@ -16,7 +16,7 @@ import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
 // Pages:
-import { ChangeTheme, DocumentationPages, Pages, SocialPages } from "./items";
+import { Pages, ChangeTheme, SocialPages } from "./items";
 
 const CommandK = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -47,7 +47,6 @@ const CommandK = () => {
 
   const handleChangeTheme = (theme: string) => {
     setTheme(theme);
-    setOpen(false);
     toast.success(`Theme changed to ${theme}`);
   };
 
@@ -81,18 +80,6 @@ const CommandK = () => {
               >
                 <theme.icon size={22} strokeWidth={1.5} />
                 <span>{theme.name}</span>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-          <CommandGroup heading="Contribute">
-            {DocumentationPages.map((doc) => (
-              <CommandItem
-                key={doc.href}
-                value={`Contribute: ${doc.name}`}
-                onSelect={() => handleExternalRoute(doc.href)}
-              >
-                <doc.icon size={22} strokeWidth={1.5} />
-                <span>{doc.name}</span>
               </CommandItem>
             ))}
           </CommandGroup>
