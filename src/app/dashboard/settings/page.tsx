@@ -8,6 +8,7 @@ import SettingsCard from "@/components/settings/card";
 import DownloadAllLinks from "@/components/links/download-all-links";
 import { HeartCrackIcon } from "lucide-react";
 import UserBlocked from "@/components/settings/userBlocked";
+import DownloadAllSubdomains from "@/components/subdomains/download-all-subdomains";
 
 export const metadata: Metadata = {
   title: "Settings - Dashboard",
@@ -31,6 +32,10 @@ const SettingsPage = async () => {
         <div className="mb-5 flex w-52 flex-col space-y-2">
           <p>Export links:</p>
           <DownloadAllLinks />
+        </div>
+        <div className="mb-5 flex w-52 flex-col space-y-2">
+          <p>Export subdomains:</p>
+          <DownloadAllSubdomains />
         </div>
         <div className="flex w-52 flex-col space-y-2">
           <p>Delete account:</p>
