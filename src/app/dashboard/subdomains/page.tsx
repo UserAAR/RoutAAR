@@ -16,6 +16,7 @@ import { CopyIcon, QrCodeIcon, SettingsIcon } from "lucide-react";
 import CopyLinkDropdown from "@/components/links/copy-link";
 import CopyQR from "@/components/links/copy-qr";
 import { buttonVariants } from "@/ui/button";
+import { formatDate } from "@/utils/formatDate";
 
 export const metadata: Metadata = {
   title: "Subdomains",
@@ -144,7 +145,7 @@ const SubdomainsPage = async ({
                   </p>
                 )}
               </div>
-              <p>{s.lastVisited ? new Date(s.lastVisited).toLocaleString() : ""}</p>
+              <p>{s.lastVisited ? formatDate(new Date(s.lastVisited)) : formatDate(new Date(String((s as any).createdAt)))}</p>
             </div>
           </div>
         ))}

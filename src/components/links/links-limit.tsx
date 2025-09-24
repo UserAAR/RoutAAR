@@ -6,7 +6,6 @@ import {
   TooltipTrigger,
 } from "@/ui/tooltip";
 import { cn } from "@/utils";
-import { PackageIcon, TriangleAlertIcon } from "lucide-react";
 
 interface LinksLimitProps {
   userLinks: number;
@@ -27,18 +26,7 @@ const LinksLimit = ({ userLinks, maxLinks }: LinksLimitProps) => {
               className: "cursor-default font-mono shadow-none",
             })}
           >
-            <div
-              className={cn(
-                mid ? "text-yellow-500" : "",
-                max ? "text-red-500" : "",
-                "flex items-center space-x-2",
-              )}
-            >
-              {max ? (
-                <TriangleAlertIcon size={14} />
-              ) : (
-                <PackageIcon size={14} />
-              )}
+            <div className={cn("flex items-center space-x-2")}> 
               <span>
                 {userLinks}/{isInfinite ? "∞" : maxLinks}
               </span>
