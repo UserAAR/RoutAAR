@@ -17,6 +17,7 @@ import CopyLinkDropdown from "@/components/links/copy-link";
 import CopyQR from "@/components/links/copy-qr";
 import { buttonVariants } from "@/ui/button";
 import { formatDate } from "@/utils/formatDate";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/ui/collapsible";
 
 export const metadata: Metadata = {
   title: "Subdomains",
@@ -129,25 +130,42 @@ const SubdomainsPage = async ({
             <p className="mb-2 truncate select-all font-mono text-sm text-neutral-500 dark:text-neutral-400" title={s.targetBaseUrl}>
               {s.mode.toUpperCase()} → {s.targetBaseUrl}
             </p>
-            <div className="flex items-center justify-between font-mono text-xs font-medium text-neutral-600 dark:text-neutral-400 md:space-x-2">
-              <div className="flex max-w-[75%] items-center space-x-2">
-                {s.tags.length > 0 && (
-                  <div className="flex cursor-default items-center space-x-1">
-                    {s.tags.map((tag) => (
-                      <span key={tag.tagId} className="rounded-md border border-neutral-200 px-2 py-[0.5px] font-mono text-xs dark:border-neutral-800">
-                        {tags.find((t) => t.id === tag.tagId)?.name}
-                      </span>
-                    ))}
+            <Collapsible>
+              <div className="flex items-center justify-between font-mono text-xs font-medium text-neutral-600 dark:text-neutral-400 md:space-x-2">
+                <div className="flex max-w-[75%] items-center space-x-2">
+                  {s.tags.length > 0 && (
+                    <div className="flex cursor-default items-center space-x-1">
+                      {s.tags.map((tag) => (
+                        <span key={tag.tagId} className="rounded-md border border-neutral-200 px-2 py-[0.5px] font-mono text-xs dark:border-neutral-800">
+                          {tags.find((t) => t.id === tag.tagId)?.name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {s.description && (
+                    <p className="hidden truncate md:block" title={s.description ?? ""}>
+                      {s.description}
+                    </p>
+                  )}
+                  <CollapsibleTrigger className="flex items-center transition-colors hover:text-neutral-900 dark:hover:text-white md:hidden">
+                    <span className="mr-2">Info</span>
+                  </CollapsibleTrigger>
+                </div>
+                <p>{formatDate(new Date((s.lastVisited ?? s.createdAt) as string | number | Date))}</p>
+              </div>
+              <CollapsibleContent className="flex flex-col">
+                <div className="my-2 p-2 shadow-sm">
+                  <ShowClicks numberOfClicks={s.clicks} lastDate={s.lastVisited ? new Date(s.lastVisited) : null} />
+                </div>
+                {s.description && (
+                  <div className="p-2 shadow-sm">
+                    <p className="text-pretty text-sm" title={s.description ?? ""}>
+                      {s.description}
+                    </p>
                   </div>
                 )}
-                {s.description && (
-                  <p className="hidden truncate md:block" title={s.description ?? ""}>
-                    {s.description}
-                  </p>
-                )}
-              </div>
-              <p>{formatDate(new Date((s.lastVisited ?? s.createdAt) as string | number | Date))}</p>
-            </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
         ))}
       </div>
