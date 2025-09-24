@@ -11,12 +11,11 @@ export async function GET(req: NextRequest) {
     const originalHost = req.headers.get('host'); // Örn: "blogss.aars.works"
 
     const upstreamHeaders = new Headers();
-    // Gerekli header'ları yönlendirmeye devam et (senin kodun gayet iyiydi)
     const accept = req.headers.get("accept");
     if (accept) upstreamHeaders.set("accept", accept);
     const ua = req.headers.get("user-agent");
     if (ua) upstreamHeaders.set("user-agent", ua);
-    upstreamHeaders.set("accept-encoding", "identity"); // Bu satır linkleri değiştirebilmek için önemli!
+    upstreamHeaders.set("accept-encoding", "identity");
 
     const res = await fetch(upstream.toString(), {
       method: "GET",
@@ -24,7 +23,6 @@ export async function GET(req: NextRequest) {
       redirect: "follow",
     });
 
-    // Güvenlik ve çakışma için header'ları temizle (senin kodun)
     const resHeaders = new Headers(res.headers);
     resHeaders.delete("set-cookie");
     resHeaders.delete("content-security-policy");
@@ -32,9 +30,9 @@ export async function GET(req: NextRequest) {
     resHeaders.delete("strict-transport-security");
     resHeaders.set("cache-control", "no-store");
 
-    const contentType = res.headers.get("content-type") || "";
+    // DÜZELTİLMİŞ SATIR BURASI
+    const contentType = res.headers.get("content-type") ?? "";
 
-    // EĞER GELEN İÇERİK HTML DEĞİLSE, ESKİSİ GİBİ OLDUĞU GİBİ GÖNDER
     if (!contentType.includes("text/html")) {
       return new Response(res.body, {
         status: res.status,
@@ -42,7 +40,6 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // EĞER GELEN İÇERİK HTML İSE, LİNKLERİ DÜZELT
     const htmlBody = await res.text();
 
     const rewrittenBody = htmlBody
@@ -50,7 +47,6 @@ export async function GET(req: NextRequest) {
       .replace(/src="\//g, `src="https://${originalHost}/`)
       .replace(/action="\//g, `action="https://${originalHost}/`);
 
-    // İçeriği değiştirdiğimiz için eski 'content-length' başlığı artık geçersiz.
     resHeaders.delete('content-length');
 
     return new Response(rewrittenBody, {
