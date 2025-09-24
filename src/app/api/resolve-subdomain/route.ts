@@ -1,11 +1,11 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { resolveSubdomain } from "@/server/middleware/subdomain";
 
 export async function GET(req: NextRequest) {
   const search = req.nextUrl.searchParams;
   const subdomain = search.get("subdomain");
-  const path = search.get("path") || "/";
-  const query = search.get("query") || "";
+  const path = search.get("path") ?? "/";
+  const query = search.get("query") ?? "";
 
   if (!subdomain) {
     return Response.json({ error: true, message: "Missing subdomain" }, { status: 400 });

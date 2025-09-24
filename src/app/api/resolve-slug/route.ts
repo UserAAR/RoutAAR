@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { db } from "@/server/db";
 import { checkBlocked } from "@/server/actions/profile";
 

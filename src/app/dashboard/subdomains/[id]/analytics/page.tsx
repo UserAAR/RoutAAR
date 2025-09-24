@@ -1,12 +1,31 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { getSubdomainAnalytics } from "@/server/queries";
 
 export const metadata: Metadata = {
   title: "Subdomain Analytics",
 };
 
+type VisitRow = {
+  id: string;
+  ts: string | Date;
+  path: string;
+  country: string | null;
+  referrer: string | null;
+};
+
+type AnalyticsResult = {
+  subdomain: {
+    subdomain: string;
+    mode: string;
+    enabled: boolean;
+    lastVisited: string | Date | null;
+  };
+  total: number;
+  recent: VisitRow[];
+};
+
 const AnalyticsPage = async ({ params }: { params: { id: string } }) => {
-  const data = await getSubdomainAnalytics(params.id);
+  const data = (await getSubdomainAnalytics(params.id)) as AnalyticsResult | null;
 
   if (!data) {
     return (
@@ -18,7 +37,7 @@ const AnalyticsPage = async ({ params }: { params: { id: string } }) => {
     );
   }
 
-  const { subdomain, total, recent } = data as any;
+  const { subdomain, total, recent } = data;
 
   return (
     <main className="w-full duration-500 animate-in fade-in-5 slide-in-from-bottom-2">
@@ -55,12 +74,12 @@ const AnalyticsPage = async ({ params }: { params: { id: string } }) => {
                 </tr>
               </thead>
               <tbody>
-                {recent.map((r: any) => (
+                {recent.map((r) => (
                   <tr key={r.id} className="border-t border-neutral-100 dark:border-neutral-900">
                     <td className="px-2 py-1">{new Date(r.ts).toLocaleString()}</td>
                     <td className="px-2 py-1">{r.path}</td>
-                    <td className="px-2 py-1">{r.country || "-"}</td>
-                    <td className="px-2 py-1 truncate">{r.referrer || "-"}</td>
+                    <td className="px-2 py-1">{r.country ?? "-"}</td>
+                    <td className="px-2 py-1 truncate">{r.referrer ?? "-"}</td>
                   </tr>
                 ))}
               </tbody>

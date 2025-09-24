@@ -43,22 +43,22 @@ export default auth(async (req) => {
       const subdomain = hostParts.slice(0, hostParts.length - primaryParts.length).join(".");
       if (subdomain) {
         const path = nextUrl.pathname;
-        const query = nextUrl.search || "";
+        const query = nextUrl.search ?? "";
 
         // Call API to resolve (avoid Prisma in Edge middleware)
         const resolveUrl = new URL(`/api/resolve-subdomain?subdomain=${encodeURIComponent(subdomain)}&path=${encodeURIComponent(path)}&query=${encodeURIComponent(query)}`, nextUrl);
-        const res = await fetch(resolveUrl, { headers: { "x-mw": "1" } });
-        const result = await res.json();
+        const res = await fetch(resolveUrl.toString(), { headers: { "x-mw": "1" } });
+        const result: { notFound?: boolean; error?: boolean; message?: string; redirectUrl?: string; statusCode?: number; renderUrl?: string } = await res.json();
 
         handledBySubdomain = true;
         if (result.notFound) {
           return NextResponse.json({ error: "Subdomain not found" }, { status: 404 });
         }
         if (result.error) {
-          return NextResponse.json({ error: result.message || "Error" }, { status: 500 });
+          return NextResponse.json({ error: result.message ?? "Error" }, { status: 500 });
         }
         if (result.redirectUrl) {
-          return NextResponse.redirect(result.redirectUrl, { status: result.statusCode || 302 });
+          return NextResponse.redirect(result.redirectUrl, { status: result.statusCode ?? 302 });
         }
         if (result.renderUrl) {
           const rewriteUrl = new URL(`/api/_proxy?url=${encodeURIComponent(result.renderUrl)}`, nextUrl);
@@ -110,9 +110,9 @@ export default auth(async (req) => {
   // ⚙️ Redirect using slug:
   // If not public route and not protected route:
   if (!isPublicRoute && !isProtectedRoute && !isCheckRoute) {
-    const apiUrl = new URL(`/api/resolve-slug?slug=${encodeURIComponent(slugRoute || "")}`, nextUrl);
-    const res = await fetch(apiUrl, { headers: { "x-mw": "1" } });
-    const data = await res.json();
+    const apiUrl = new URL(`/api/resolve-slug?slug=${encodeURIComponent(slugRoute ?? "")}`, nextUrl);
+    const res = await fetch(apiUrl.toString(), { headers: { "x-mw": "1" } });
+    const data: { redirect404?: boolean; error?: boolean; message?: string; url?: string } = await res.json();
 
     if (data.redirect404) {
       console.log("🚧 Error - Redirect 404: ", slugRoute);

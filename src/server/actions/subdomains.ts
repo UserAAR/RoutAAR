@@ -65,13 +65,13 @@ export const createSubdomain = async (
   const created = await db.subdomains.create({
     data: {
       subdomain: values.subdomain,
-      mode: values.mode as "redirect" | "render",
+      mode: values.mode,
       targetBaseUrl: values.targetBaseUrl,
       passthrough: values.passthrough,
       statusCode: values.statusCode,
       enabled: values.enabled,
       description: values.description,
-      creatorId: currentUser.user?.id!,
+      creatorId: currentUser.user?.id ?? "",
     },
   });
 
@@ -94,13 +94,13 @@ export const updateSubdomain = async (
     where: { id: values.id },
     data: {
       subdomain: values.subdomain,
-      mode: values.mode as "redirect" | "render",
+      mode: values.mode,
       targetBaseUrl: values.targetBaseUrl,
       passthrough: values.passthrough,
       statusCode: values.statusCode,
       enabled: values.enabled,
       description: values.description,
-      creatorId: currentUser.user?.id!,
+      creatorId: currentUser.user?.id ?? "",
     },
   });
 

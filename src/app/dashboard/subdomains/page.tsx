@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { getSubdomainsByUser } from "@/server/actions/subdomains";
 import { Button } from "@/ui/button";
 import { PlusIcon, BarChart3Icon, PencilIcon } from "lucide-react";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 type SubdomainItem = {
   id: string;
   subdomain: string;
-  mode: string;
+  mode: "redirect" | "render";
   targetBaseUrl: string;
   enabled: boolean;
   passthrough: boolean;
@@ -62,7 +62,7 @@ const SubdomainsPage = async () => {
                   defaultValues={{
                     id: s.id,
                     subdomain: s.subdomain,
-                    mode: s.mode as any,
+                    mode: s.mode,
                     targetBaseUrl: s.targetBaseUrl,
                     passthrough: s.passthrough,
                     statusCode: s.statusCode,

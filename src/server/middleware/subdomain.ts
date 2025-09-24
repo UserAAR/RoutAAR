@@ -28,10 +28,10 @@ const joinUrl = (baseUrl: string, path: string, query: string, passthrough: bool
     const url = new URL(baseUrl);
     if (passthrough) {
       const basePath = url.pathname.endsWith("/") ? url.pathname.slice(0, -1) : url.pathname;
-      const addPath = path ? path : "";
+      const addPath = path ?? "";
       const fullPath = `${basePath}${addPath}` || "/";
       url.pathname = fullPath;
-      if (query && query.startsWith("?")) {
+      if (query?.startsWith("?")) {
         const params = new URLSearchParams(query.substring(1));
         params.forEach((v, k) => url.searchParams.append(k, v));
       }
@@ -50,7 +50,7 @@ export const resolveSubdomain = async (
       where: { subdomain: input.subdomain },
     });
 
-    if (!entry || !entry.enabled) {
+    if (!entry?.enabled) {
       return { notFound: true };
     }
 
@@ -67,12 +67,12 @@ export const resolveSubdomain = async (
     await db.visits.create({
       data: {
         subdomainId: entry.id,
-        path: input.path || "/",
-        query: input.query || "",
-        country: input.headers.country ?? undefined,
-        ip: input.headers.ip ?? undefined,
-        referrer: input.headers.referrer ?? undefined,
-        userAgent: input.headers.userAgent ?? undefined,
+        path: input.path ?? "/",
+        query: input.query ?? "",
+        country: input.headers?.country ?? undefined,
+        ip: input.headers?.ip ?? undefined,
+        referrer: input.headers?.referrer ?? undefined,
+        userAgent: input.headers?.userAgent ?? undefined,
         mode: entry.mode,
         status: undefined,
       },

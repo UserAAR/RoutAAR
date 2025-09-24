@@ -30,7 +30,7 @@ interface Props {
   defaultValues: {
     id: string;
     subdomain: string;
-    mode: "redirect" | "render" | string;
+    mode: "redirect" | "render";
     targetBaseUrl: string;
     passthrough: boolean;
     statusCode: number;
@@ -48,7 +48,7 @@ export function EditSubdomain(props: Props) {
     defaultValues: {
       id: props.defaultValues.id,
       subdomain: props.defaultValues.subdomain,
-      mode: props.defaultValues.mode as "redirect" | "render",
+      mode: props.defaultValues.mode,
       targetBaseUrl: props.defaultValues.targetBaseUrl,
       passthrough: props.defaultValues.passthrough,
       statusCode: (props.defaultValues.statusCode as 301 | 302) ?? 302,
