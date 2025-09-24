@@ -26,7 +26,7 @@ const Header = () => {
       >
         <div className="flex items-center space-x-5">
           <div className="flex items-center space-x-1 pr-1 md:pr-4">
-            <ExternalLink
+            <a
               href={`https://${env.CONTROL_HOST}`}
               className="flex items-center space-x-3 transition-opacity hover:opacity-80 rtl:space-x-reverse"
             >
@@ -35,7 +35,7 @@ const Header = () => {
                 Routaar
               </span>
               <Badge className="hidden cursor-pointer md:block">beta</Badge>
-            </ExternalLink>
+            </a>
           </div>
         </div>
         <div className="flex items-center space-x-1">

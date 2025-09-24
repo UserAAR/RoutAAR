@@ -21,10 +21,10 @@ const NotFoundPage = async () => {
             {`The page you're looking for doesn't exist on ${domain}.`}
           </p>
           <div className="flex items-center justify-center space-x-2">
-            <ExternalLink className={buttonVariants({ variant: "outline" })} href="https://rout.aars.works">
+            <a className={buttonVariants({ variant: "outline" })} href="https://rout.aars.works">
               <HomeIcon size={18} />
               <span>Go back home</span>
-            </ExternalLink>
+            </a>
             <ExternalLink
               className={buttonVariants({ variant: "outline" })}
               href="https://api.whatsapp.com/send/?phone=994507746585&text=Hello!%20I%20need%20assistance%20with%20Routaar."
