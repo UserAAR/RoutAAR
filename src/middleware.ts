@@ -103,8 +103,9 @@ export default auth(async (req) => {
     return NextResponse.redirect(new URL(`/auth?callbackUrl=${encodedCallbackUrl}`, nextUrl));
   }
 
-  // Path-based slugs on public root host (aars.works)
-  if (host === publicRootHost && !isPublicRoute && !isProtectedRoute && !isCheckRoute) {
+  // Path-based slugs on control host, public root host, or local dev
+  const isLocal = host?.includes("localhost") || host?.startsWith("127.0.0.1");
+  if ((host === publicRootHost || host === controlHost || isLocal) && !isPublicRoute && !isProtectedRoute && !isCheckRoute) {
     const apiUrl = new URL(`/api/resolve-slug?slug=${encodeURIComponent(slugRoute ?? "")}`, nextUrl);
     const res = await fetch(apiUrl.toString(), { headers: { "x-mw": "1" } });
     const data: { redirect404?: boolean; error?: boolean; message?: string; url?: string } = await res.json();
