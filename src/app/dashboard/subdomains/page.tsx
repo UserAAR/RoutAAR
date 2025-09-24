@@ -78,9 +78,9 @@ const SubdomainsPage = async ({
         {filtered.map((s) => (
           <div key={s.id} className="flex w-full flex-col rounded-md border border-neutral-200 p-3 shadow-sm dark:border-neutral-800">
             <div className="mb-1 flex w-full items-center justify-between space-x-2">
-              <Link href={`https://${s.subdomain}.${env.PRIMARY_HOST}`} className="block space-x-[1px] overflow-hidden truncate font-medium transition-opacity duration-75 hover:opacity-80">
+              <Link href={`https://${s.subdomain}.${env.PUBLIC_ROOT_HOST}`} className="block space-x-[1px] overflow-hidden truncate font-medium transition-opacity duration-75 hover:opacity-80">
                 <span className="text-sm opacity-40">{s.subdomain}.</span>
-                <span>{env.PRIMARY_HOST}</span>
+                <span>{env.PUBLIC_ROOT_HOST}</span>
               </Link>
               <div className="flex items-center space-x-3">
                 <ShowClicks numberOfClicks={s.clicks} lastDate={s.lastVisited ? new Date(s.lastVisited) : null} className="hidden border-r border-neutral-200 pr-2 dark:border-neutral-800 md:flex" />
@@ -90,7 +90,7 @@ const SubdomainsPage = async ({
                       <CopyIcon size={15} />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <CopyLinkDropdown absoluteUrl={`https://${s.subdomain}.${env.PRIMARY_HOST}`} />
+                      <CopyLinkDropdown absoluteUrl={`https://${s.subdomain}.${env.PUBLIC_ROOT_HOST}`} />
                       <DialogTrigger asChild>
                         <DropdownMenuItem>
                           <QrCodeIcon size={15} />
@@ -99,7 +99,7 @@ const SubdomainsPage = async ({
                       </DialogTrigger>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  <CopyQR absoluteUrl={`https://${s.subdomain}.${env.PRIMARY_HOST}`} filename={`${s.subdomain}.${env.PRIMARY_HOST}`} />
+                  <CopyQR absoluteUrl={`https://${s.subdomain}.${env.PUBLIC_ROOT_HOST}`} filename={`${s.subdomain}.${env.PUBLIC_ROOT_HOST}`} />
                 </Dialog>
                 <EditSubdomain
                   defaultValues={{
@@ -117,7 +117,7 @@ const SubdomainsPage = async ({
                     <SettingsIcon size={16} />
                   </button>
                 </EditSubdomain>
-                <DeleteSubdomain id={s.id} subdomain={`${s.subdomain}.${env.PRIMARY_HOST}`}>
+                <DeleteSubdomain id={s.id} subdomain={`${s.subdomain}.${env.PUBLIC_ROOT_HOST}`}>
                   <button className="transition-opacity hover:opacity-75" aria-label="Delete" title="Delete">
                     <TrashIcon size={16} />
                   </button>
